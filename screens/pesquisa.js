@@ -2,33 +2,26 @@ import React, {useState, useEffect} from 'react';
 import { Text,
   TextInput,
   View,
+  Image,
   TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import StyPesquisa from './styless/styPesquisa';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
+const listaPerquisa = require ('./dados/pesquisa.json')
+
 function PesquisaScreen({navigation}) {
+
   const [resultado, setResultado] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
-
-  const listaTeste = [
-    {
-      nome: 'Bruno',
-    },
-    {
-      nome: 'Suellen',
-    },
-    {
-      nome: 'Pedro',
-    },
-  ];
 
   useEffect(() => {}, []);
 
   useEffect(() => {
     if (pesquisa !== '') {
-      const listaFiltrada = listaTeste.filter(x =>
-        x.nome.toLowerCase().includes(pesquisa.toLowerCase()),
+      const listaFiltrada = listaPerquisa.Pesquisas.filter(x =>
+        x.titulo.toLowerCase().includes(pesquisa.toLowerCase()),
       );
       setResultado(listaFiltrada);
     } else {
@@ -36,9 +29,6 @@ function PesquisaScreen({navigation}) {
     }
   }, [pesquisa]);
 
-  function buttonPress() {
-    navigation.goBack();
-  }
 
   return (
     <View style={StyPesquisa.container}>
@@ -55,19 +45,46 @@ function PesquisaScreen({navigation}) {
           <TextInput
             style={StyPesquisa.textInput}
             onChangeText={valor => setPesquisa(valor)}
-            placeholder="Digite algo aqui"
+            placeholder="Pesquisar"
             placeholderTextColor="#666"></TextInput>
         </View>
       </View>
-      {resultado &&
-        resultado.length > 0 &&
-        resultado.map(item => {
-          return (
-            <View>
-              <Text style={StyPesquisa.text1}>{item.nome}</Text>
-            </View>
+      <ScrollView style={StyPesquisa.scroll}>
+        <View style={StyPesquisa.stilee2}>
+         {resultado.length === 0 && listaPerquisa.Pesquisas.map(item => {
+             return (
+                  <View style={StyPesquisa.stilee3}>
+                    <TouchableOpacity>
+                    <Image style={StyPesquisa.imagPost1}
+                    source={{ uri: item.fotoPostagem }}
+                    resizeMode="stretch"/>
+                    </TouchableOpacity>
+                  </View>
           );
         })}
+      {resultado.length > 0 &&
+        resultado.map(item => {
+          return (
+              <TouchableOpacity style={StyPesquisa.view2}>
+              <View style={StyPesquisa.view3}>
+                  <Image
+                    style={StyPesquisa.imagPerf}
+                    source={{
+                    uri: item.fotoPerfil,
+                    }}
+                    resizeMode="contain"
+                  />
+              </View>
+              <View style={StyPesquisa.viewText1}>
+                <Text style={StyPesquisa.text1}>{item.titulo}</Text>
+                <Text style={StyPesquisa.text2}>{item.nome}</Text>
+                <Text style={StyPesquisa.text2}>{item.textSeguindo}</Text>
+              </View>
+              </TouchableOpacity>
+          );
+        })}
+        </View>
+        </ScrollView>
     </View>
   );
 }
