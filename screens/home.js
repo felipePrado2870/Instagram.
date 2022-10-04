@@ -8,7 +8,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Octicons from 'react-native-vector-icons/Octicons'
 import StyHome from './styless/styHome';
 
 const listaPosts = require('./dados/teste.json');
@@ -33,15 +34,45 @@ function HomeScreen({navigation}) {
   });
 
   return (
-    <View style={StyHome.scroll}>
+    <View style={StyHome.scroll1}>
       <View style={StyHome.view1}>
           <Image
             style={StyHome.image1}
             source={instaLogoIcon}
             resizeMode="contain"
           />
+          <View style={StyHome.viewIcons}>
+            <TouchableOpacity>
+          <Octicons name="diff-added" style={StyHome.icon1}/>
+          </TouchableOpacity>
+          <TouchableOpacity>
+          <FontAwesome name="heart-o" style={StyHome.icon1} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+          <Feather name="message-circle" style={StyHome.icon1}/>
+          </TouchableOpacity>
+          </View>
       </View>
-      <ScrollView style={StyHome.scroll}>
+      <ScrollView style={StyHome.scroll1}>
+        <ScrollView horizontal style={StyHome.scroll2}>
+         <View style={StyHome.stilee2}>
+           {listaPosts.posts.length > 0 &&
+             listaPosts.posts.map(item => {
+              return (
+                <TouchableOpacity>
+                  <View style={StyHome.view3}>
+                    <Image
+                      style={StyHome.imagPerf1}
+                      source={{
+                        uri: item.fotoPerfil,
+                      }}
+                      resizeMode="contain"
+                    />
+                    </View>
+                   </TouchableOpacity>
+              )})}
+          </View>
+        </ScrollView>
         <View style={StyHome.stilee1}>
           {listaPosts.posts.length === 0 && (
             <Text>Nenhum post para visualizar no momento</Text>
@@ -52,21 +83,32 @@ function HomeScreen({navigation}) {
               return (
                 <View style={StyHome.stilee1}>
                   <View style={StyHome.stilee2}>
+                    <View style={StyHome.view3}>
+                      <TouchableOpacity>
                     <Image
-                      style={StyHome.imagPerf}
+                      style={StyHome.imagPerf2}
                       source={{
                         uri: item.fotoPerfil,
                       }}
                       resizeMode="contain"
                     />
+                    </TouchableOpacity>
+                     </View> 
                     <View style={StyHome.stilee3}>
+                      <TouchableOpacity>
                       <Text style={StyHome.textTitulo}>{item.titulo}</Text>
                       <Text style={StyHome.textData}>{item.data}</Text>
+                      </TouchableOpacity>
                     </View>
+                    <View style={StyHome.stilee4}>
+                    <TouchableOpacity>
+                     <Feather name="more-vertical" style={StyHome.icon2} />
+                     </TouchableOpacity>
+                     </View>
                   </View>
                   <Image
                     style={StyHome.imagPost}
-                    source={{
+                    source={{ 
                       uri: item.fotoPostagem,
                     }}
                     resizeMode="stretch"
@@ -100,7 +142,9 @@ function HomeScreen({navigation}) {
                       </TouchableOpacity>
                     </View>
                   </View>
+                  <TouchableOpacity>
                   <Text style={StyHome.textComent}>{item.descricao}</Text>
+                  </TouchableOpacity>
                 </View>
               );
             })}
