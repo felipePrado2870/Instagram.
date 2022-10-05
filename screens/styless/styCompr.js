@@ -14,9 +14,6 @@ const StyCompr = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
       },
-      view4:{
-        
-      },
       view5:{
         backgroundColor: '#000',
         height: 25,
@@ -67,7 +64,8 @@ const StyCompr = StyleSheet.create({
         width: 20,
         color: '#ffffff',
         fontSize: 22,
-        marginTop: 5,
+        marginTop: 7,
+        marginLeft:10
       },
       icon2: {
         height: 15,
@@ -84,10 +82,19 @@ const StyCompr = StyleSheet.create({
         borderWidth: 1,
         color: '#ffffff',
         marginTop: 10,
-        marginHorizontal: 20,
+        marginEnd: 25,
+        marginLeft:5,
         paddingHorizontal: 10,
       },
-      imagPost: {
+      imagPost1: {
+        borderRadius:7,
+        marginTop: 5,
+        width: '100%',
+        height: 200,
+        borderColor: '#000000',
+        borderWidth: 2,
+      },
+      imagPost2: {
         borderRadius:20,
         marginTop: 5,
         width: '100%',
@@ -106,6 +113,12 @@ const StyCompr = StyleSheet.create({
         marginLeft: 5,
       },
       stilee3: {
+        flexDirection: 'column',
+        width: '48%',
+        height: 205,
+        marginLeft: 5,
+      },
+      stilee4: {
         flexDirection: 'column',
         width: '48%',
         height: 330,

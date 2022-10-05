@@ -33,10 +33,6 @@ function ComprScreen({navigation}) {
     }
   }, [pesquisa]);
 
-  function buttonPress() {
-    navigation.goBack();
-  }
-
   return (
     <View style={StyCompr.container}>
       <View
@@ -50,20 +46,32 @@ function ComprScreen({navigation}) {
           <TextInput
             style={StyCompr.textInput}
             onChangeText={valor => setPesquisa(valor)}
-            placeholder="Digite algo aqui"
+            placeholder="Pesquisar"
             placeholderTextColor="#666"></TextInput>
         </View>
       </View>
       <ScrollView style={StyCompr.scroll}>
+      
         <View style={StyCompr.stilee2}>
-      {resultado &&
-        resultado.length > 0 &&
-        resultado.map(item => {
-          return (
+        {resultado.length === 0 && ListaCompras.compras.map ( item => {
+             return (
                   <View style={StyCompr.stilee3}>
-                    <Image style={StyCompr.imagPost}
+                    <TouchableOpacity>
+                    <Image style={StyCompr.imagPost1}
                     source={{ uri: item.foloProduto }}
-                    resizeMode="stretch"/>
+                    resizeMode="stretch"/> 
+                    </TouchableOpacity>
+                  </View>
+          );
+        })} 
+        {resultado && resultado.length > 0 &&
+           resultado.map(item => {
+             return (
+                  <View style={StyCompr.stilee4}>
+                    <TouchableOpacity>
+                    <Image style={StyCompr.imagPost2}
+                    source={{ uri: item.foloProduto }}
+                    resizeMode="stretch"/></TouchableOpacity>
                       <View style={StyCompr.view2}>
                         <View style={StyCompr.view5}>
                           <Text style={StyCompr.text2}>{item.tituloDescr}</Text>
