@@ -1,0 +1,9 @@
+{
+    "postagensVideos": [
+        {
+            "id": 1,
+            "numer1":"120",
+            "videoPostagem": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+          }
+    ]
+}
