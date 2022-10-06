@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import ProfileScreen from './profile';
 import HomeScreen from './home';
 import PesquisaScreen from './pesquisa';
