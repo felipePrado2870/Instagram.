@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Image, StyleSheet,TouchableOpacity,  ScrollView} from 'react-native';
 
-const listaPerfil = require('./dados/segind.json');
+const listaPerfil = require('./dados/publiFotos.json');
 
 function PubliFotoScreen({navigation}) {
   const styles = StyleSheet.create({
@@ -28,8 +28,8 @@ function PubliFotoScreen({navigation}) {
       <ScrollView style={styles.scroll}>
         <View>
           <View style={styles.stilee2}>
-            {listaPerfil.perfil.postagens.length > 0 &&
-              listaPerfil.perfil.postagens.map(item => {
+            {listaPerfil.postagens.length > 0 &&
+              listaPerfil.postagens.map(item => {
                 return (
                   <TouchableOpacity onPress={() => {}}>
                   <Image style={styles.imagPost}
