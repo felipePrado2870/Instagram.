@@ -16,7 +16,7 @@ import PubliFotoScreen from './publiFoto';
 import PubliVideoScreen from './publiVideos';
 import PubliPessoaScreen from './publiPessoas';
 
-const listaPerfil = require('./dados/segind.json');
+const listaPerfil = require('./dados/profile.json');
 
 function ProfileScreen({navigation}) {
 
@@ -64,7 +64,7 @@ function ProfileScreen({navigation}) {
         <View style={StyProile.View1}>
           <View style={StyProile.View3}>
             <TouchableOpacity onPress={() => {}}>
-                <Text style={StyProile.textTitulo1}>felipeprado03020</Text>
+                <Text style={StyProile.textTitulo1}>{listaPerfil.perfil.titulo1}</Text>
             </TouchableOpacity>
           </View>
           <View style={StyProile.viewIcon1}>
@@ -96,7 +96,7 @@ function ProfileScreen({navigation}) {
                     resizeMode="contain"/>
                 </TouchableOpacity>
                 <View style={StyProile.stilee3}>
-                  <Text style={StyProile.textTitulo2}>{'Felipe Prado'}</Text>
+                  <Text style={StyProile.textTitulo2}>{listaPerfil.perfil.titulo2}</Text>
                 </View>
               </View>
               <View style={StyProile.stilee3}>
@@ -157,7 +157,7 @@ function ProfileScreen({navigation}) {
                   resizeMode="contain"/>
               </TouchableOpacity>
               <View style={StyProile.stilee2}>
-                <Text style={StyProile.textTitulo4}>{'Felipe Prado'}</Text>
+                <Text style={StyProile.textTitulo4}>{listaPerfil.perfil.titulo2}</Text>
               </View>
             </View>
             <TouchableOpacity onPress={() => {}} style={StyProile.touch2}>
