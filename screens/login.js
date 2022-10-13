@@ -5,6 +5,7 @@ import {
   Button,
   TextInput,
   Image,
+  Alert,
   TouchableOpacity
 } from 'react-native';
 import auth from '@react-native-firebase/auth'
@@ -20,24 +21,23 @@ function LoginScreen({navigation}) {
   const [hidePass, setHidePass] = useState(true);
 
   function executeClick() {
-    // auth().createUserWithEmailAndPassword(email,senha).then(userCredential =>{
-    //   console.log('user: ',userCredential)
-    // }).catch(error =>{
-    //   if (error.code === 'auth/email-already-in-use') {
-    //     console.log('email ja existe');
-    //   }
-    //   if (error.code === 'auth/invalid-email') {
-    //     console.log('email invalido');
-    //   }
-    // })
-    // console.log({email});
-    // console.log({senha});
-    // //  if (email === 'felipe@teste.com' && senha === '123456') {
-    navigation.navigate('BottomTab');
-    //} else {
-    //  Alert.alert('Atenção', 'Email ou senha inválidos');
-    // }
+    auth().signInWithEmailAndPassword(email,senha)
+    .then(() =>{
+    console.log('usuario Logado!')
+    navigation.navigate('BottomTab')
+   })
+    .catch(error =>{
+        if (error.code === 'auth/wrong-password') {
+          console.log('Senha incorreta.');
+          Alert.alert('Atenção', 'Senha incorreta.')
+        }
+        if (error.code === 'auth/invalid-email') {
+          console.log('email invalido');
+          Alert.alert('Atenção', 'Email invalido')
+        } 
+      })
   }
+  
 
   function newAccontClick() {
     navigation.navigate('Creating an account');
