@@ -8,7 +8,7 @@ const StyAddSenha = StyleSheet.create({
       },
       view1:{
         height: 36,
-        width: '86%',
+        width: 400,
         marginLeft: 20,
         backgroundColor: '#444',
         marginTop: 30,
@@ -16,7 +16,7 @@ const StyAddSenha = StyleSheet.create({
       },
       view2:{
         height: 36,
-        width: '86%',
+        width: 400,
         marginLeft: 20,
         backgroundColor: '#444',
         marginTop: 16,

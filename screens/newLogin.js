@@ -6,12 +6,14 @@ import {
   StatusBar,
   StyleSheet,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
-import StyNewLog from './styless/styNewLog'
+import StyNewLog from './styless/styNewLog';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import AddEmailScreen from './addEmail';
-import AddFoneScreen from './addFone';
-import AddSenhaScreen from './addSenha';
+import StyAddFone from './styless/styAddFone';
+import StyAddEmail from './styless/styAddEmail';
+import StyAddSenha from './styless/styAddSenha';
+import auth from '@react-native-firebase/auth';
 
 function NewAccontScreen({navigation}) {
   function buttonPress() {
@@ -19,6 +21,12 @@ function NewAccontScreen({navigation}) {
   }
 
  const [page, setPage] = useState(1);
+ const [numero1, setNumero1] = useState('');
+ const [numero2, setNumero2] = useState('');
+ const [numero3, setNumero3] = useState('');
+ const [email, setEmail] = useState('');
+ const [senha1, setSenha1] = useState('');
+ const [senha2, setSenha2] = useState('');
  
  const styles = StyleSheet.create({
  text1:{
@@ -50,14 +58,15 @@ viewBarra3:{
   backgroundColor: '#000000',
 },
 touch2:{
-  marginTop:page === 2 ? 40 : 10,
+  marginTop:page === 2 ? 430 :480,
   justifyContent: 'center',
   alignItems: 'center',
   borderRadius: 6,
   marginLeft:20,
   height: 40,
-  width: '85%',
+  width: 400,
   backgroundColor: '#1e90ff',
+  position: 'absolute'
 }
 });
 
@@ -67,15 +76,34 @@ touch2:{
 
  function add1() { 
   if 
-  (page === '' || page === 0 || page === 1) 
-  {setPage(2)}
+  (page === 1 && numero1 > 10 && numero2 > 10 && numero3 > 900000000) 
+  {setPage(2)
+  console.log('+'+numero1+'('+numero2+')' +numero3)}
   if 
-  (page === 2) 
-  {setPage(3) || Alert.alert('Email valido', 'Adicione sua senha')}
+  (page === 2 && email !== '') 
+     {setPage(3)
+      console.log(email)}
   if 
-  (page === 3) 
-    {navigation.navigate('BottomTab');}
-  }
+  (page === 3 && senha1 !== '' && senha2 !== ''  ) 
+    if (senha1 !== senha2)
+    {Alert.alert('Atenção', 'Suas senhas são diferentes') }
+     else 
+   {auth().createUserWithEmailAndPassword(email,senha1)
+     .then(userCredential =>{
+      console.log('user: ',userCredential)
+      navigation.navigate('BottomTab')
+    })
+    .catch(error =>{
+      if (error.code === 'auth/email-already-in-use') {
+        console.log('email ja existe');
+        Alert.alert('Atenção', 'Email ja existe')
+      }
+      if (error.code === 'auth/invalid-email') {
+        console.log('email invalido');
+        Alert.alert('Atenção', 'Email invalido')
+      } 
+    })
+  }}
 
   return (
     <View style={StyNewLog.view1}>
@@ -110,9 +138,80 @@ touch2:{
           </View>
         </TouchableOpacity>
       </View>
-        {page === 1 && <AddFoneScreen />}
-        {page === 2 && <AddEmailScreen />}
-        {page === 3 && <AddSenhaScreen />}
+        {page === 1 && <View style={StyAddFone.container}>
+      <View
+        style={StyAddFone.view1}>
+        <TextInput
+          keyboardType="numeric"
+          style={StyAddFone.textInput}
+          placeholder={'US+1'}
+          placeholderTextColor="#888"
+          onChangeText={valor => setNumero1(valor)}
+          maxLength={2}
+        />
+        <View
+          style={StyAddFone.view2}
+        />
+        <TextInput
+          keyboardType="numeric"
+          style={StyAddFone.textInput1}
+          placeholder={'DD'}
+          placeholderTextColor="#888"
+          onChangeText={valor => setNumero2(valor)}
+          maxLength={2}
+        /><TextInput
+        keyboardType="numeric"
+        style={StyAddFone.textInput2}
+        placeholder={'+ Telefone'}
+        placeholderTextColor="#888"
+        onChangeText={valor => setNumero3(valor)}
+        maxLength={9}
+      />
+      </View>
+      <View
+        style={StyAddFone.view3}>
+        <Text style={StyAddFone.text}>
+          Você poderá receber notificaçõespo SMS para fins de
+        </Text>
+        <Text style={StyAddFone.text}>segurança e login</Text>
+      </View>
+    </View>}
+        {page === 2 && <View style={StyAddEmail.container}>
+      <View
+        style={StyAddEmail.vie1}>
+        <TextInput
+          keyboardType="web-search"
+          style={StyAddEmail.textInput1}
+          placeholder={'Email'}
+          placeholderTextColor="#888"
+          onChangeText={value => setEmail(value)}
+        />
+      </View>
+    </View>}
+        {page === 3 && <View style={StyAddSenha.container}>
+      <View
+        style={StyAddSenha.view1}>
+        <TextInput
+          keyboardType="web-search"
+          style={StyAddSenha.textInput1}
+          placeholder={'Senha'}
+          placeholderTextColor="#888"
+          onChangeText={value => setSenha1(value)}
+          maxLength={12}
+        />
+      </View>
+      <View
+        style={StyAddSenha.view2}>
+        <TextInput
+          keyboardType="web-search"
+          style={StyAddSenha.textInput1}
+          placeholder={'Confirme sua senha'}
+          placeholderTextColor="#888"
+          onChangeText={value => setSenha2(value)}
+          maxLength={12}
+        />
+      </View>
+    </View>}
       
       <TouchableOpacity  onPress={add1}
           style={styles.touch2}>

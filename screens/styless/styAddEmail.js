@@ -9,7 +9,7 @@ const StyAddEmail = StyleSheet.create({
         vie1:{
           flexDirection: 'row',
           height: 36,
-          width: '86%',
+          width:400,
           marginLeft: 20,
           backgroundColor: '#444',
           marginTop: 30,
