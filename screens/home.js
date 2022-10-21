@@ -11,9 +11,9 @@ import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Octicons from 'react-native-vector-icons/Octicons'
 import StyHome from './styless/styHome';
-
+ 
 const listaPosts = require('./dados/teste.json');
-const instaLogoIcon = require('../assets/instagram-name-logo.png');
+const instaLogoIcon = require('../assets/INV.png');
 
 
 function HomeScreen({navigation}) {

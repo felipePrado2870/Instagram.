@@ -10,13 +10,13 @@ const StySplash = StyleSheet.create({
           alignItems: 'center',
     },
     text1:{
-        marginTop: 290, color: '#1e90ff', fontSize: 12
+        marginTop: 70, color: '#ffff', fontSize: 17
     },
     image1:{
-        marginLeft: 10, height: 100, marginTop: 270, width: 160
+        height: 450, marginTop: 200, width: 450
     },
     image2:{
-        height: 30, width: 100
+        height: 40, width: 120,
     }
 
 });

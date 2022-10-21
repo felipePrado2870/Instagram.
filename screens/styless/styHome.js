@@ -20,7 +20,7 @@ const StyHome = StyleSheet.create({
         flexDirection:'row'
       },
       viewIcons:{
-       marginLeft: 170,
+       marginLeft: 65,
        flexDirection: 'row',
       },
       textTitulo: {
@@ -63,7 +63,7 @@ const StyHome = StyleSheet.create({
        marginLeft:140,
       },
       image1:{
-        marginLeft: 10, height: 60, width: 100
+        marginLeft: 10, height: 50, width: 220
       },
       view3:{
         width: 53,
@@ -123,8 +123,9 @@ const StyHome = StyleSheet.create({
         marginTop: 15,
         color: '#ffffff',
         fontSize: 25,
-        height: 50,
-        width: 50,
+        height: 30,
+        marginLeft: 10,
+        width: 30,
       },
       icon2: {
         marginTop: 30,
