@@ -13,7 +13,7 @@ import StyLogin from './styless/styLogin';
 import AntDesing from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const instaLogoIcon = require('../assets/instagram-name-logo.png');
+const instaLogoIcon = require('../assets/INV.png');
 
 function LoginScreen({navigation}) {
   const [email, setEmail] = useState('');
@@ -21,6 +21,10 @@ function LoginScreen({navigation}) {
   const [hidePass, setHidePass] = useState(true);
 
   function executeClick() {
+    if (email === '' || senha === '')
+    {Alert.alert('Atenção', 'Email ou  senha sem valor') }
+  
+    else {
     auth().signInWithEmailAndPassword(email,senha)
     .then(() =>{
     console.log('usuario Logado!')
@@ -36,12 +40,18 @@ function LoginScreen({navigation}) {
           Alert.alert('Atenção', 'Email invalido')
         } 
       })
+    }
   }
   
 
   function newAccontClick() {
     navigation.navigate('Creating an account');
-
+  }
+  function resetSenha(){
+    auth()
+    .sendPasswordResetEmail(email)
+    .then(() => Alert.alert("Redifinição de sinha","Enviamos um e-mail para você") )
+    .catch(error => console.log (error))
   }
   return (
     <View style={StyLogin.view}>
@@ -85,7 +95,7 @@ function LoginScreen({navigation}) {
       </View>
       <View
         style={StyLogin.viewEsqSenha}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={resetSenha}>
           <Text style={StyLogin.text3}>Senha esquecida?</Text>
         </TouchableOpacity>
       </View>

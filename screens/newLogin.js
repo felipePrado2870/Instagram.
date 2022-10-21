@@ -76,9 +76,15 @@ touch2:{
 
  function add1() { 
   if 
+  (page === 1 && numero1 < 10 && numero2 < 10 && numero3 < 900000000) 
+  {Alert.alert('Atenção','Telefone esta vazio')}
+  if 
   (page === 1 && numero1 > 10 && numero2 > 10 && numero3 > 900000000) 
   {setPage(2)
   console.log('+'+numero1+'('+numero2+')' +numero3)}
+  if 
+  (page === 2 && email === '') 
+     {Alert.alert('Atenção','E-mail esta vazio')}
   if 
   (page === 2 && email !== '') 
      {setPage(3)
