@@ -14,7 +14,10 @@ const StyProile = StyleSheet.create ({
          width: '100%'
       },
       View3:{
-        marginTop: 5
+        flexDirection:'row',
+        marginTop: 5,
+        height: 50, 
+         width: 160
       },
       View4:{
         height: 40, 
@@ -29,7 +32,6 @@ const StyProile = StyleSheet.create ({
         marginTop: 13
       },
       viewIcon2:{
-        marginLeft: 140, 
         flexDirection: 'row', 
         marginTop: 5
       },
@@ -150,15 +152,23 @@ const StyProile = StyleSheet.create ({
         width: 20,
         color: '#ffffff',
         fontSize: 22,
-    
-        marginTop: 5,
+        marginTop: 3
       },
       iconSalv1: {
-        height: 35,
+        height: 25,
+        marginLeft:175,
         width: 20,
         color: '#ffffff',
+        fontSize: 22,
+        marginTop: 5,
+      },
+      
+      iconSalv2: {
+        height: 25,
+        width: 22,
+        color: '#ffffff',
         fontSize: 32,
-        marginTop: 4,
+        marginTop: 3,
       },
       iconSalv3: {
         height: 20,
