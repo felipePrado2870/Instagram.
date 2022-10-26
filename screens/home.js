@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
   Image,
   StyleSheet,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator, 
+  FlatList,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Octicons from 'react-native-vector-icons/Octicons'
 import StyHome from './styless/styHome';
- 
-const listaPosts = require('./dados/teste.json');
+import firestore from '@react-native-firebase/firestore';
+
 const instaLogoIcon = require('../assets/INV.png');
 
 
@@ -22,6 +24,8 @@ function HomeScreen({navigation}) {
   }
   const [icon1, setIcon1] = useState(true);
   const [icon2, setIcon2] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
   
   const styles = StyleSheet.create({
      iconAmei: {
@@ -32,10 +36,33 @@ function HomeScreen({navigation}) {
       marginLeft: 5,
     }
   });
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('UsuariosPostagens')
+      .onSnapshot(querySnapshot => {
+        const users = [];
+  
+        querySnapshot.forEach(documentSnapshot => {
+          users.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+  
+        setUsers(users);
+        setLoading(false);
+      });
 
+    return () => subscriber();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }  
   return (
     <View style={StyHome.scroll1}>
       <View style={StyHome.view1}>
+
           <Image
             style={StyHome.image1}
             source={instaLogoIcon}
@@ -54,33 +81,34 @@ function HomeScreen({navigation}) {
           </View>
       </View>
       <ScrollView style={StyHome.scroll1}>
-        <ScrollView horizontal style={StyHome.scroll2}>
+        
+        <FlatList
+    data={users}
+    horizontal
+    renderItem={({ item }) => (
+    <ScrollView horizontal style={StyHome.scroll2}>
          <View style={StyHome.stilee2}>
-           {listaPosts.posts.length > 0 &&
-             listaPosts.posts.map(item => {
-              return (
                 <TouchableOpacity>
                   <View style={StyHome.view3}>
                     <Image
                       style={StyHome.imagPerf1}
                       source={{
-                        uri: item.fotoPerfil,
+                        uri: item.fotoPostagem,
                       }}
                       resizeMode="contain"
                     />
                     </View>
                    </TouchableOpacity>
-              )})}
+              
           </View>
-        </ScrollView>
+          </ScrollView>
+           )}
+           />
+        
+        <FlatList
+    data={users}
+    renderItem={({ item }) => (
         <View style={StyHome.stilee1}>
-          {listaPosts.posts.length === 0 && (
-            <Text>Nenhum post para visualizar no momento</Text>
-          )}
-
-          {listaPosts.posts.length > 0 &&
-            listaPosts.posts.map(item => {
-              return (
                 <View style={StyHome.stilee1}>
                   <View style={StyHome.stilee2}>
                     <View style={StyHome.view3}>
@@ -96,7 +124,7 @@ function HomeScreen({navigation}) {
                      </View> 
                     <View style={StyHome.stilee3}>
                       <TouchableOpacity>
-                      <Text style={StyHome.textTitulo}>{item.titulo}</Text>
+                      <Text style={StyHome.textTitulo}>{item.nome}</Text>
                       <Text style={StyHome.textData}>{item.data}</Text>
                       </TouchableOpacity>
                     </View>
@@ -143,12 +171,12 @@ function HomeScreen({navigation}) {
                     </View>
                   </View>
                   <TouchableOpacity>
-                  <Text style={StyHome.textComent}>{item.descricao}</Text>
+                  <Text style={StyHome.textComent}>{item.comentario}</Text>
                   </TouchableOpacity>
                 </View>
-              );
-            })}
         </View>
+          )}
+          />
       </ScrollView>
     </View>
   );
