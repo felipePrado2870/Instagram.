@@ -4,6 +4,7 @@ const StyPesquisa = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#000000',
+        width: '100%',
       },
       view1:{
         backgroundColor: '#444',
@@ -65,7 +66,7 @@ const StyPesquisa = StyleSheet.create({
         paddingHorizontal: 10,
       },
       stilee3: {
-        width: '48%',
+        width: '50%',
         height: 205,
         marginLeft: 5,
       },
@@ -85,7 +86,8 @@ const StyPesquisa = StyleSheet.create({
       stilee2: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginLeft: 5,
+        marginLeft: 3,
+        width: '100%',
       },
       imagPerf: {
         width: 56,

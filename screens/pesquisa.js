@@ -4,10 +4,13 @@ import { Text,
   View,
   Image,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  ActivityIndicator, 
+  FlatList,
 } from 'react-native';
 import StyPesquisa from './styless/styPesquisa';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import firestore from '@react-native-firebase/firestore';
 
 const listaPerquisa = require ('./dados/pesquisa.json')
 
@@ -15,6 +18,8 @@ function PesquisaScreen({navigation}) {
 
   const [resultado, setResultado] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
+  const [loading, setLoading] = useState(true);
+   const [users, setUsers] = useState([]);
 
   useEffect(() => {}, []);
 
@@ -29,8 +34,32 @@ function PesquisaScreen({navigation}) {
     }
   }, [pesquisa]);
 
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('UsuariosPostagens')
+      .onSnapshot(querySnapshot => {
+        const users = [];
+  
+        querySnapshot.forEach(documentSnapshot => {
+          users.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+  
+        setUsers(users);
+        setLoading(false);
+      });
+
+    return () => subscriber();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }  
 
   return (
+   
     <View style={StyPesquisa.container}>
       <View
         style={StyPesquisa.view1}>
@@ -48,11 +77,18 @@ function PesquisaScreen({navigation}) {
             placeholder="Pesquisar"
             placeholderTextColor="#666"></TextInput>
         </View>
-      </View>
-      <ScrollView style={StyPesquisa.scroll}>
+
+      </View> 
+      <FlatList
+      numColumns='2'
+    data={users}
+    renderItem={({ item }) => (
         <View style={StyPesquisa.stilee2}>
-         {resultado.length === 0 && listaPerquisa.Pesquisas.map(item => {
-             return (
+         {resultado.length === 0 &&
+         <FlatList
+         numColumns='2'
+       data={users}
+       renderItem={({ item }) => (
                   <View style={StyPesquisa.stilee3}>
                     <TouchableOpacity>
                     <Image style={StyPesquisa.imagPost1}
@@ -60,11 +96,11 @@ function PesquisaScreen({navigation}) {
                     resizeMode="stretch"/>
                     </TouchableOpacity>
                   </View>
-          );
-        })}
+                  )}
+                  />
+          }
+          
       {resultado.length > 0 &&
-        resultado.map(item => {
-          return (
               <TouchableOpacity style={StyPesquisa.view2}>
               <View style={StyPesquisa.view3}>
                   <Image
@@ -76,15 +112,15 @@ function PesquisaScreen({navigation}) {
                   />
               </View>
               <View style={StyPesquisa.viewText1}>
-                <Text style={StyPesquisa.text1}>{item.titulo}</Text>
+                <Text style={StyPesquisa.text1}>{item.nomePerfil}</Text>
                 <Text style={StyPesquisa.text2}>{item.nome}</Text>
                 <Text style={StyPesquisa.text2}>{item.textSeguindo}</Text>
               </View>
               </TouchableOpacity>
-          );
-        })}
-        </View>
-        </ScrollView>
+              
+         }
+        </View>)}
+              />
     </View>
   );
 }
