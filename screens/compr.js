@@ -5,13 +5,14 @@ import {
   Image,
   View,
   TouchableOpacity,
-  ScrollView
+  ScrollView, 
+  ActivityIndicator, 
+  FlatList,
 } from 'react-native';
 import StyCompr from './styless/styCompr';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import Evilicons from 'react-native-vector-icons/EvilIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import firestore from '@react-native-firebase/firestore';
 
 const ListaCompras = require('./dados/compas.json')
 
@@ -19,6 +20,8 @@ function ComprScreen({navigation}) {
   const [resultado, setResultado] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
   const [icon2, setIcon2] = useState(true);
+  const [loading, setLoading] = useState(true);
+   const [users, setUsers] = useState([]);
 
   useEffect(() => {}, []);
 
@@ -31,7 +34,31 @@ function ComprScreen({navigation}) {
     } else {
       setResultado([]);
     }
-  }, [pesquisa]);
+  },
+   [pesquisa]);
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('Compras')
+      .onSnapshot(querySnapshot => {
+        const users = [];
+  
+        querySnapshot.forEach(documentSnapshot => {
+          users.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+  
+        setUsers(users);
+        setLoading(false);
+      });
+
+    return () => subscriber();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }  
 
   return (
     <View style={StyCompr.container}>
@@ -50,11 +77,12 @@ function ComprScreen({navigation}) {
             placeholderTextColor="#666"></TextInput>
         </View>
       </View>
-      <ScrollView style={StyCompr.scroll}>
-      
+      <FlatList
+      numColumns='2'
+    data={users}
+    renderItem={({ item }) => (
         <View style={StyCompr.stilee2}>
-        {resultado.length === 0 && ListaCompras.compras.map ( item => {
-             return (
+        {resultado.length === 0 &&
                   <View style={StyCompr.stilee3}>
                     <TouchableOpacity>
                     <Image style={StyCompr.imagPost1}
@@ -62,11 +90,8 @@ function ComprScreen({navigation}) {
                     resizeMode="stretch"/> 
                     </TouchableOpacity>
                   </View>
-          );
-        })} 
+         } 
         {resultado && resultado.length > 0 &&
-           resultado.map(item => {
-             return (
                   <View style={StyCompr.stilee4}>
                     <TouchableOpacity>
                     <Image style={StyCompr.imagPost2}
@@ -88,10 +113,10 @@ function ComprScreen({navigation}) {
                        <Text style={StyCompr.text7}>{item.valor1}</Text>
                     </View>
                   </View>
-          );
-        })} 
+         } 
         </View>
-        </ScrollView>
+          )}
+          />
     </View>
   );
 }

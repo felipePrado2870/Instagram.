@@ -111,18 +111,19 @@ const StyCompr = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         marginLeft: 5,
+        marginTop:10,
       },
       stilee3: {
         flexDirection: 'column',
-        width: '48%',
+        width: 205,
         height: 205,
-        marginLeft: 5,
+        marginLeft: 3,
       },
       stilee4: {
         flexDirection: 'column',
-        width: '48%',
+        width: 205,
         height: 330,
-        marginLeft: 5,
+        marginLeft: 3,
       },
 });
   export default StyCompr
