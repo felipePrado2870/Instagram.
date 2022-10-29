@@ -10,6 +10,12 @@ const StyHome = StyleSheet.create({
         flexWrap:'wrap',
         backgroundColor: '#000000',
       },
+      container: {
+        width: '100%',
+        height: '100%',
+        backgroundColor:'#000000',
+        justifyContent: 'center'
+        },
     view1:{
       flexDirection: 'row',
         backgroundColor: '#000', 
@@ -50,6 +56,9 @@ const StyHome = StyleSheet.create({
       },
       stilee2: {
         flexDirection: 'row',
+        height: 80, 
+        
+
       },
       stilee3: {
         marginLeft: 15,

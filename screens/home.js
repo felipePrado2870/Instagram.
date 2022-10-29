@@ -34,7 +34,7 @@ function HomeScreen({navigation}) {
       alignSelf: 'baseline',
       marginTop: 5,
       marginLeft: 5,
-    }
+    },
   });
   useEffect(() => {
     const subscriber = firestore()
@@ -57,7 +57,7 @@ function HomeScreen({navigation}) {
   }, []);
 
   if (loading) {
-    return <ActivityIndicator />;
+    return (<View style={StyHome.container} ><ActivityIndicator /></View>) ;
   }  
   return (
     <View style={StyHome.scroll1}>
@@ -80,20 +80,19 @@ function HomeScreen({navigation}) {
           </TouchableOpacity>
           </View>
       </View>
-      <ScrollView style={StyHome.scroll1}>
         
         <FlatList
     data={users}
     horizontal
     renderItem={({ item }) => (
-    <ScrollView horizontal style={StyHome.scroll2}>
+    
          <View style={StyHome.stilee2}>
                 <TouchableOpacity>
                   <View style={StyHome.view3}>
                     <Image
                       style={StyHome.imagPerf1}
                       source={{
-                        uri: item.fotoPostagem,
+                        uri: item.fotoPerfil,
                       }}
                       resizeMode="contain"
                     />
@@ -101,7 +100,6 @@ function HomeScreen({navigation}) {
                    </TouchableOpacity>
               
           </View>
-          </ScrollView>
            )}
            />
         
@@ -177,7 +175,6 @@ function HomeScreen({navigation}) {
         </View>
           )}
           />
-      </ScrollView>
     </View>
   );
 }
