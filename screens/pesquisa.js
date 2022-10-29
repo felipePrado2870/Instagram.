@@ -4,7 +4,6 @@ import { Text,
   View,
   Image,
   TouchableOpacity,
-  ScrollView,
   ActivityIndicator, 
   FlatList,
 } from 'react-native';
@@ -55,7 +54,7 @@ function PesquisaScreen({navigation}) {
   }, []);
 
   if (loading) {
-    return <ActivityIndicator />;
+    return (<View style={StyPesquisa.container1} ><ActivityIndicator /></View>);
   }  
 
   return (

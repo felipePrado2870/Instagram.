@@ -6,6 +6,12 @@ const StyPesquisa = StyleSheet.create({
         backgroundColor: '#000000',
         width: '100%',
       },
+      container1: {
+        width: '100%',
+        height: '100%',
+        backgroundColor:'#000000',
+        justifyContent: 'center'
+        },
       view1:{
         backgroundColor: '#444',
         height: 40,
