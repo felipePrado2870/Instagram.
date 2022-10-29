@@ -5,7 +5,6 @@ import {
   Image,
   View,
   TouchableOpacity,
-  ScrollView, 
   ActivityIndicator, 
   FlatList,
 } from 'react-native';
@@ -14,10 +13,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import firestore from '@react-native-firebase/firestore';
 
-const ListaCompras = require('./dados/compas.json')
-
 function ComprScreen({navigation}) {
-  const [resultado, setResultado] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
   const [icon2, setIcon2] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -25,17 +21,6 @@ function ComprScreen({navigation}) {
 
   useEffect(() => {}, []);
 
-  useEffect(() => {
-    if (pesquisa !== '') {
-      const listaFiltrada = ListaCompras.compras.filter(x =>
-        x.titulo.toLowerCase().includes(pesquisa.toLowerCase()),
-      );
-      setResultado(listaFiltrada);
-    } else {
-      setResultado([]);
-    }
-  },
-   [pesquisa]);
   useEffect(() => {
     const subscriber = firestore()
       .collection('Compras')
@@ -82,7 +67,7 @@ function ComprScreen({navigation}) {
     data={users}
     renderItem={({ item }) => (
         <View style={StyCompr.stilee2}>
-        {resultado.length === 0 &&
+        {pesquisa === '' &&
                   <View style={StyCompr.stilee3}>
                     <TouchableOpacity>
                     <Image style={StyCompr.imagPost1}
@@ -91,7 +76,7 @@ function ComprScreen({navigation}) {
                     </TouchableOpacity>
                   </View>
          } 
-        {resultado && resultado.length > 0 &&
+        {pesquisa !== '' &&
                   <View style={StyCompr.stilee4}>
                     <TouchableOpacity>
                     <Image style={StyCompr.imagPost2}

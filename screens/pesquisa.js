@@ -11,27 +11,13 @@ import StyPesquisa from './styless/styPesquisa';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import firestore from '@react-native-firebase/firestore';
 
-const listaPerquisa = require ('./dados/pesquisa.json')
-
 function PesquisaScreen({navigation}) {
 
-  const [resultado, setResultado] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
   const [loading, setLoading] = useState(true);
    const [users, setUsers] = useState([]);
 
   useEffect(() => {}, []);
-
-  useEffect(() => {
-    if (pesquisa !== '') {
-      const listaFiltrada = listaPerquisa.Pesquisas.filter(x =>
-        x.titulo.toLowerCase().includes(pesquisa.toLowerCase()),
-      );
-      setResultado(listaFiltrada);
-    } else {
-      setResultado([]);
-    }
-  }, [pesquisa]);
 
   useEffect(() => {
     const subscriber = firestore()
@@ -56,6 +42,9 @@ function PesquisaScreen({navigation}) {
   if (loading) {
     return (<View style={StyPesquisa.container1} ><ActivityIndicator /></View>);
   }  
+  
+
+   
 
   return (
    
@@ -83,7 +72,7 @@ function PesquisaScreen({navigation}) {
     data={users}
     renderItem={({ item }) => (
         <View style={StyPesquisa.stilee2}>
-         {resultado.length === 0 &&
+         {pesquisa === '' &&
          <FlatList
          numColumns='2'
        data={users}
@@ -99,7 +88,7 @@ function PesquisaScreen({navigation}) {
                   />
           }
           
-      {resultado.length > 0 &&
+      {pesquisa !== '' &&
               <TouchableOpacity style={StyPesquisa.view2}>
               <View style={StyPesquisa.view3}>
                   <Image
