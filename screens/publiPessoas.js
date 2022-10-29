@@ -1,50 +1,49 @@
-import React from 'react';
-import {View, Image, StyleSheet,TouchableOpacity,  ScrollView} from 'react-native';
-const listaPerfil = require('./dados/publiPessoas.json');
+import React, {useState, useEffect} from 'react';
+import {View, Image,TouchableOpacity, ActivityIndicator, 
+  FlatList,} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+import StyPubliPessoas from './styless/StyPubliPessoas';
 
-function PubliPessoaScreen({navigation}) {
-  function buttonPress() {
-    navigation.goBack();
-  }
+function PubliPessoaScreen() {
+  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
 
-  const styles = StyleSheet.create({
-    scroll: {
-      flex: 1,
-      backgroundColor: '#000000',
-    },
-    stilee2: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      marginLeft: 5,
-      marginTop: 5,
-    },
-    imagPost: {
-      marginTop: 5,
-      width: 140,
-      height: 120,
-      borderColor: '#000000',
-      borderWidth: 3,
-    },
-  });
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('UsuariosPostagens')
+      .onSnapshot(querySnapshot => {
+        const users = [];
+  
+        querySnapshot.forEach(documentSnapshot => {
+          users.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+  
+        setUsers(users);
+        setLoading(false);
+      });
+
+    return () => subscriber();
+  }, []);
+
+  if (loading) {
+    return (<View style={StyPubliPessoas.container} ><ActivityIndicator /></View>);
+  }  
   return (
-    <View style={styles.scroll}>
-    <ScrollView style={styles.scroll}>
-      <View>
-        <View style={styles.stilee2}>
-          {listaPerfil.postagensPessoas.length > 0 &&
-            listaPerfil.postagensPessoas.map(item => {
-              return (
+    <FlatList
+    data={users}
+    numColumns='3'
+    renderItem={({ item }) => (
                 <TouchableOpacity onPress={() => {}}>
-                <Image style={styles.imagPost}
-                  source={{ uri: item.imagem }}
+                <Image style={StyPubliPessoas.imagPost}
+                  source={{ uri: item.fotoPostagem }}
                   resizeMode="stretch"/>
                 </TouchableOpacity>
-              );
-            })}
-        </View>
-      </View>
-    </ScrollView>
-  </View>
+      
+            )}
+            />
   );
 }
 export default PubliPessoaScreen;
