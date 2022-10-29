@@ -19,8 +19,6 @@ import PubliVideoScreen from './publiVideos';
 import PubliPessoaScreen from './publiPessoas';
 import firestore from '@react-native-firebase/firestore';
 
-const listaPerfil = require('./dados/profile.json');
-
 function ProfileScreen({navigation}) {
 
   const [page, setPage] = useState(1);
@@ -87,7 +85,7 @@ function ProfileScreen({navigation}) {
       }, []);
     
       if (loading) {
-        return <ActivityIndicator />;
+        return (<View style={StyProile.container} ><ActivityIndicator /></View>);
       }  
   return (
   <FlatList
@@ -126,7 +124,7 @@ function ProfileScreen({navigation}) {
                 <TouchableOpacity onPress={() => {}}>
                   <Image
                     style={StyProile.imagPerf}
-                    source={{uri: listaPerfil.perfil.fotoPerfil}}
+                    source={{uri: item.fotoPerfil}}
                     resizeMode="contain"/>
                 </TouchableOpacity>
                 <View style={StyProile.stilee3}>
@@ -176,7 +174,7 @@ function ProfileScreen({navigation}) {
               <TouchableOpacity onPress={() => {}}>
                 <Image
                   style={StyProile.imagPerf1}
-                  source={{uri: listaPerfil.perfil.fotoPerfil}}
+                  source={{uri: item.fotoPerfil}}
                   resizeMode="contain"/>
               </TouchableOpacity>
               <View style={StyProile.stilee2}>

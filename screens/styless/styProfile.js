@@ -5,6 +5,12 @@ const StyProile = StyleSheet.create ({
         flex: 1,
         backgroundColor: '#000000',
       },
+      container: {
+        width: '100%',
+        height: '100%',
+        backgroundColor:'#000000',
+        justifyContent: 'center'
+        },
       View1:{
         flexDirection: 'row'
       },
