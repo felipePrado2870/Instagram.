@@ -1,11 +1,13 @@
-import React, { useState }from 'react';
+import React, { useState , useEffect }from 'react';
 import {StyleSheet, Text,
-  TouchableOpacity, View , Image,TouchableWithoutFeedback,
+  TouchableOpacity, View , Image,TouchableWithoutFeedback,ActivityIndicator, 
+  FlatList,
   ScrollView} from 'react-native';
 import Video from 'react-native-video';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import StyVideos from './styless/styVideos';
+import firestore from '@react-native-firebase/firestore';
 
 const listaVideos = require('./dados/videos.json')
 
@@ -16,6 +18,8 @@ function VideosScreen({navigation}) {
    const [icon1, setIcon1] = useState(true);
     const [text1, setText1] = useState(false)
    const [paused1, setPaused1] = useState(false)
+   const [loading, setLoading] = useState(true);
+   const [users, setUsers] = useState([]);
 
    const onPlayPausePress = ()=> {
    setPaused1(!paused1)
@@ -39,12 +43,35 @@ function VideosScreen({navigation}) {
 
     }
   });
-  return (
-    <View style={StyVideos.containerVideo}>
+      useEffect(() => {
+        const subscriber = firestore()
+          .collection('videoPostagem')
+          .onSnapshot(querySnapshot => {
+            const users = [];
       
-     <ScrollView>
-       {listaVideos.videoos.length > 0 && listaVideos.videoos.map(item => {
-        return(
+            querySnapshot.forEach(documentSnapshot => {
+              users.push({
+                ...documentSnapshot.data(),
+                key: documentSnapshot.id,
+              });
+            });
+      
+            setUsers(users);
+            setLoading(false);
+          });
+    
+        return () => subscriber();
+      }, []);
+    
+      if (loading) {
+        return (<View style={StyVideos.container} ><ActivityIndicator /></View>) ;
+      }  
+  return (
+    <FlatList
+    data={users}
+    renderItem={({ item }) => (
+
+    <View style={StyVideos.containerVideo}>
         <TouchableWithoutFeedback onPress={onPlayPausePress}>
           <View style={StyVideos.containerVideo}>
             <Video source={{uri:item.videoPostagem}} 
@@ -129,11 +156,9 @@ function VideosScreen({navigation}) {
                     </View>
                    </TouchableOpacity></View>
        </View></TouchableWithoutFeedback>
-           )
-       })}
-       </ScrollView>
-       
     </View>
+     )}
+     />
   );
 }
 export default VideosScreen;

@@ -7,6 +7,12 @@ const StyVideos = StyleSheet.create({
     width: '100%',
     height: 745,
   },
+  container: {
+    width: '100%',
+    height: '100%',
+    backgroundColor:'#000000',
+    justifyContent: 'center'
+    },
   container1:{
     marginTop:430,
     height: 170,
