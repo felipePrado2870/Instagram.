@@ -1,7 +1,14 @@
 import { StyleSheet } from "react-native";
 
 const StyCompr = StyleSheet.create({
-    container: {
+   
+      container: {
+        width: '100%',
+        height: '100%',
+        backgroundColor:'#000000',
+        justifyContent: 'center'
+        },
+         container1: {
         flex: 1,
         backgroundColor: '#000000',
       },

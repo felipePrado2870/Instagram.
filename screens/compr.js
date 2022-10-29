@@ -57,11 +57,11 @@ function ComprScreen({navigation}) {
   }, []);
 
   if (loading) {
-    return <ActivityIndicator />;
+    return (<View style={StyCompr.container} ><ActivityIndicator /></View>);
   }  
 
   return (
-    <View style={StyCompr.container}>
+    <View style={StyCompr.container1}>
       <View
         style={StyCompr.view3}>
         <View style={StyCompr.viewTouch3}>
