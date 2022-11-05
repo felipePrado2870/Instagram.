@@ -5,40 +5,48 @@ import {
   Image,
   View,
   TouchableOpacity,
-  ScrollView
+  ActivityIndicator, 
+  FlatList,
 } from 'react-native';
 import StyCompr from './styless/styCompr';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import Evilicons from 'react-native-vector-icons/EvilIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-
-const ListaCompras = require('./dados/compas.json')
+import firestore from '@react-native-firebase/firestore';
 
 function ComprScreen({navigation}) {
-  const [resultado, setResultado] = useState([]);
   const [pesquisa, setPesquisa] = useState('');
   const [icon2, setIcon2] = useState(true);
+  const [loading, setLoading] = useState(true);
+   const [users, setUsers] = useState([]);
 
   useEffect(() => {}, []);
 
   useEffect(() => {
-    if (pesquisa !== '') {
-      const listaFiltrada = ListaCompras.compras.filter(x =>
-        x.titulo.toLowerCase().includes(pesquisa.toLowerCase()),
-      );
-      setResultado(listaFiltrada);
-    } else {
-      setResultado([]);
-    }
-  }, [pesquisa]);
+    const subscriber = firestore()
+      .collection('Compras')
+      .onSnapshot(querySnapshot => {
+        const users = [];
+  
+        querySnapshot.forEach(documentSnapshot => {
+          users.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+  
+        setUsers(users);
+        setLoading(false);
+      });
 
-  function buttonPress() {
-    navigation.goBack();
-  }
+    return () => subscriber();
+  }, []);
+
+  if (loading) {
+    return (<View style={StyCompr.container} ><ActivityIndicator /></View>);
+  }  
 
   return (
-    <View style={StyCompr.container}>
+    <View style={StyCompr.container1}>
       <View
         style={StyCompr.view3}>
         <View style={StyCompr.viewTouch3}>
@@ -50,20 +58,30 @@ function ComprScreen({navigation}) {
           <TextInput
             style={StyCompr.textInput}
             onChangeText={valor => setPesquisa(valor)}
-            placeholder="Digite algo aqui"
+            placeholder="Pesquisar"
             placeholderTextColor="#666"></TextInput>
         </View>
       </View>
-      <ScrollView style={StyCompr.scroll}>
+      <FlatList
+      numColumns='2'
+    data={users}
+    renderItem={({ item }) => (
         <View style={StyCompr.stilee2}>
-      {resultado &&
-        resultado.length > 0 &&
-        resultado.map(item => {
-          return (
+        {pesquisa === '' &&
                   <View style={StyCompr.stilee3}>
-                    <Image style={StyCompr.imagPost}
+                    <TouchableOpacity>
+                    <Image style={StyCompr.imagPost1}
                     source={{ uri: item.foloProduto }}
-                    resizeMode="stretch"/>
+                    resizeMode="stretch"/> 
+                    </TouchableOpacity>
+                  </View>
+         } 
+        {pesquisa !== '' &&
+                  <View style={StyCompr.stilee4}>
+                    <TouchableOpacity>
+                    <Image style={StyCompr.imagPost2}
+                    source={{ uri: item.foloProduto }}
+                    resizeMode="stretch"/></TouchableOpacity>
                       <View style={StyCompr.view2}>
                         <View style={StyCompr.view5}>
                           <Text style={StyCompr.text2}>{item.tituloDescr}</Text>
@@ -80,10 +98,10 @@ function ComprScreen({navigation}) {
                        <Text style={StyCompr.text7}>{item.valor1}</Text>
                     </View>
                   </View>
-          );
-        })} 
+         } 
         </View>
-        </ScrollView>
+          )}
+          />
     </View>
   );
 }

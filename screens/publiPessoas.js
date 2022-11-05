@@ -1,28 +1,49 @@
-import * as React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Image,TouchableOpacity, ActivityIndicator, 
+  FlatList,} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+import StyPubliPessoas from './styless/StyPubliPessoas';
 
-function PubliPessoaScreen({navigation}) {
-  function buttonPress() {
-    navigation.goBack();
-  }
+function PubliPessoaScreen() {
+  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#000000',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    text: {
-      color: '#ffffff',
-      fontSize: 16,
-      marginTop: 10,
-    },
-  });
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('UsuariosPostagens')
+      .onSnapshot(querySnapshot => {
+        const users = [];
+  
+        querySnapshot.forEach(documentSnapshot => {
+          users.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+  
+        setUsers(users);
+        setLoading(false);
+      });
+
+    return () => subscriber();
+  }, []);
+
+  if (loading) {
+    return (<View style={StyPubliPessoas.container} ><ActivityIndicator /></View>);
+  }  
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}> Publicação com pessoas</Text>
-    </View>
+    <FlatList
+    data={users}
+    numColumns='3'
+    renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => {}}>
+                <Image style={StyPubliPessoas.imagPost}
+                  source={{ uri: item.fotoPostagem }}
+                  resizeMode="stretch"/>
+                </TouchableOpacity>
+      
+            )}
+            />
   );
 }
 export default PubliPessoaScreen;

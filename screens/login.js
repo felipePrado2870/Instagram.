@@ -5,6 +5,7 @@ import {
   Button,
   TextInput,
   Image,
+  Alert,
   TouchableOpacity
 } from 'react-native';
 import auth from '@react-native-firebase/auth'
@@ -12,7 +13,7 @@ import StyLogin from './styless/styLogin';
 import AntDesing from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const instaLogoIcon = require('../assets/instagram-name-logo.png');
+const instaLogoIcon = require('../assets/INV.png');
 
 function LoginScreen({navigation}) {
   const [email, setEmail] = useState('');
@@ -20,28 +21,39 @@ function LoginScreen({navigation}) {
   const [hidePass, setHidePass] = useState(true);
 
   function executeClick() {
-    // auth().createUserWithEmailAndPassword(email,senha).then(userCredential =>{
-    //   console.log('user: ',userCredential)
-    // }).catch(error =>{
-    //   if (error.code === 'auth/email-already-in-use') {
-    //     console.log('email ja existe');
-    //   }
-    //   if (error.code === 'auth/invalid-email') {
-    //     console.log('email invalido');
-    //   }
-    // })
-    // console.log({email});
-    // console.log({senha});
-    // //  if (email === 'felipe@teste.com' && senha === '123456') {
-    navigation.navigate('BottomTab');
-    //} else {
-    //  Alert.alert('Atenção', 'Email ou senha inválidos');
-    // }
+    navigation.navigate('BottomTab')
+
+  //   if (email === '' || senha === '')
+  //   {Alert.alert('Atenção', 'Email ou  senha sem valor') }
+  
+  //   else {
+  //   auth().signInWithEmailAndPassword(email,senha)
+  //   .then(() =>{
+  //   console.log('usuario Logado!')
+  //   navigation.navigate('BottomTab')
+  //  })
+  //   .catch(error =>{
+  //       if (error.code === 'auth/wrong-password') {
+  //         console.log('Senha incorreta.');
+  //         Alert.alert('Atenção', 'Senha incorreta.')
+  //       }
+  //       if (error.code === 'auth/invalid-email') {
+  //         console.log('email invalido');
+  //         Alert.alert('Atenção', 'Email invalido')
+  //       } 
+  //     })
+  //   }
   }
+  
 
   function newAccontClick() {
     navigation.navigate('Creating an account');
-
+  }
+  function resetSenha(){
+    auth()
+    .sendPasswordResetEmail(email)
+    .then(() => Alert.alert("Redifinição de sinha","Enviamos um e-mail para você") )
+    .catch(error => console.log (error))
   }
   return (
     <View style={StyLogin.view}>
@@ -85,7 +97,7 @@ function LoginScreen({navigation}) {
       </View>
       <View
         style={StyLogin.viewEsqSenha}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={resetSenha}>
           <Text style={StyLogin.text3}>Senha esquecida?</Text>
         </TouchableOpacity>
       </View>

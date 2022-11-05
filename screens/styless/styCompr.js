@@ -1,7 +1,14 @@
 import { StyleSheet } from "react-native";
 
 const StyCompr = StyleSheet.create({
-    container: {
+   
+      container: {
+        width: '100%',
+        height: '100%',
+        backgroundColor:'#000000',
+        justifyContent: 'center'
+        },
+         container1: {
         flex: 1,
         backgroundColor: '#000000',
       },
@@ -13,9 +20,6 @@ const StyCompr = StyleSheet.create({
         height: 40,
         width: '100%',
         flexDirection: 'row',
-      },
-      view4:{
-        
       },
       view5:{
         backgroundColor: '#000',
@@ -67,7 +71,8 @@ const StyCompr = StyleSheet.create({
         width: 20,
         color: '#ffffff',
         fontSize: 22,
-        marginTop: 5,
+        marginTop: 7,
+        marginLeft:10
       },
       icon2: {
         height: 15,
@@ -84,10 +89,19 @@ const StyCompr = StyleSheet.create({
         borderWidth: 1,
         color: '#ffffff',
         marginTop: 10,
-        marginHorizontal: 20,
+        marginEnd: 25,
+        marginLeft:5,
         paddingHorizontal: 10,
       },
-      imagPost: {
+      imagPost1: {
+        borderRadius:7,
+        marginTop: 5,
+        width: '100%',
+        height: 200,
+        borderColor: '#000000',
+        borderWidth: 2,
+      },
+      imagPost2: {
         borderRadius:20,
         marginTop: 5,
         width: '100%',
@@ -104,12 +118,19 @@ const StyCompr = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         marginLeft: 5,
+        marginTop:10,
       },
       stilee3: {
         flexDirection: 'column',
-        width: '48%',
+        width: 205,
+        height: 205,
+        marginLeft: 3,
+      },
+      stilee4: {
+        flexDirection: 'column',
+        width: 205,
         height: 330,
-        marginLeft: 5,
+        marginLeft: 3,
       },
 });
   export default StyCompr

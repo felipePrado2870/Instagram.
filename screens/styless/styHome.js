@@ -1,17 +1,33 @@
 import { StyleSheet } from "react-native";
 
 const StyHome = StyleSheet.create({
-    scroll: {
+    scroll1: {
         flex: 1,
         backgroundColor: '#000000',
       },
+      scroll2: {
+        flex: 1,
+        flexWrap:'wrap',
+        backgroundColor: '#000000',
+      },
+      container: {
+        width: '100%',
+        height: '100%',
+        backgroundColor:'#000000',
+        justifyContent: 'center'
+        },
     view1:{
+      flexDirection: 'row',
         backgroundColor: '#000', 
         height: 55, 
-        width: '100%'
+        width: '100%',
       },
       view2:{
-        flexDirection: 'row'
+        flexDirection:'row'
+      },
+      viewIcons:{
+       marginLeft: 65,
+       flexDirection: 'row',
       },
       textTitulo: {
         color: '#ffffff',
@@ -40,26 +56,47 @@ const StyHome = StyleSheet.create({
       },
       stilee2: {
         flexDirection: 'row',
+        height: 80, 
+        
+
       },
       stilee3: {
-        flex: 1,
         marginLeft: 15,
+        height: 50,
+        width: 150,
         flexDirection: 'column',
         alignSelf: 'center',
-        borderColor: '#7CA1B4',
         justifyContent: 'center',
       },
-      image1:{
-        marginLeft: 10, height: 60, width: 100
+      stilee4: {
+       marginLeft:140,
       },
-      imagPerf: {
-        width: 50,
-        height: 50,
+      image1:{
+        marginLeft: 10, height: 50, width: 220
+      },
+      view3:{
+        width: 53,
+        height: 53,
         marginTop: 10,
         marginLeft: 7,
         borderRadius: 80,
-        borderColor: '#000000',
+        borderColor: `#ff4500`,
         borderWidth: 2,
+
+      },
+      imagPerf1: {
+        width: 49,
+        height: 49,
+        borderRadius: 80,
+        borderColor: '#000000',
+        borderWidth: 3,
+      },
+      imagPerf2: {
+        width: 49,
+        height: 49,
+        borderRadius: 80,
+        borderColor: '#000000',
+        borderWidth: 3,
       },
       imagPost: {
         marginTop: 5,
@@ -90,6 +127,22 @@ const StyHome = StyleSheet.create({
         fontSize: 20,
         alignSelf: 'flex-end',
         marginTop: 5,
+      },
+      icon1: {
+        marginTop: 15,
+        color: '#ffffff',
+        fontSize: 25,
+        height: 30,
+        marginLeft: 10,
+        width: 30,
+      },
+      icon2: {
+        marginTop: 30,
+        color: '#ffffff',
+        fontSize: 20,
+        height: 20,
+        width: 20,
+        alignSelf: 'flex-end',
       }
 });
   export default StyHome

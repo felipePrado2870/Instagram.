@@ -42,7 +42,7 @@ const StyLogin = StyleSheet.create({
       marginLeft: 5,
     },
     imag1:{
-      height: 100, width: 150
+      height: 100, width: 250
     },
     viewImag1:{
       alignItems: 'center',

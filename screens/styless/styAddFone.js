@@ -9,7 +9,7 @@ const StyAddFone = StyleSheet.create({
       view1:{
         flexDirection: 'row',
         height: 36,
-        width: '86%',
+        width: 400,
         marginLeft: 20,
         backgroundColor: '#444',
         marginTop: 30,
@@ -31,13 +31,17 @@ const StyAddFone = StyleSheet.create({
       },
       textInput: {
         color: '#ffffff',
-        width: '18%',
+        width: 60,
         paddingHorizontal: 15,
       },
       textInput1: {
         color: '#ffffff',
-        width: '75%',
-        paddingHorizontal: 15,
+        width: 27,
+        marginLeft:10,
+      },
+      textInput2: {
+        color: '#ffffff',
+        width: 100,
       },
       textSenhaInput: {
         backgroundColor: '#4682b4',

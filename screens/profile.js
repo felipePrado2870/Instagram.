@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
   Image,
   ScrollView,
   TouchableOpacity, 
-  StyleSheet 
+  StyleSheet, 
+  ActivityIndicator, 
+  FlatList,
 } from 'react-native';
 import StyProile from './styless/styProfile';
 import Octicons from 'react-native-vector-icons/Octicons';
@@ -15,12 +17,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import PubliFotoScreen from './publiFoto';
 import PubliVideoScreen from './publiVideos';
 import PubliPessoaScreen from './publiPessoas';
-
-const listaPerfil = require('./dados/segind.json');
+import firestore from '@react-native-firebase/firestore';
 
 function ProfileScreen({navigation}) {
 
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+   const [users, setUsers] = useState([]);
 
   const styles = StyleSheet.create({
    icon1:{
@@ -58,13 +61,42 @@ function ProfileScreen({navigation}) {
    }
   });
 
+  function edPerfil(){
+    navigation.navigate('EditProfile')
+  }
+    useEffect(() => {
+        const subscriber = firestore()
+          .collection('Usuario')
+          .onSnapshot(querySnapshot => {
+            const users = [];
+      
+            querySnapshot.forEach(documentSnapshot => {
+              users.push({
+                ...documentSnapshot.data(),
+                key: documentSnapshot.id,
+              });
+            });
+      
+            setUsers(users);
+            setLoading(false);
+          });
+    
+        return () => subscriber();
+      }, []);
+    
+      if (loading) {
+        return (<View style={StyProile.container} ><ActivityIndicator /></View>);
+      }  
   return (
+  <FlatList
+          data={users}
+          renderItem={({ item }) => (
     <View style={StyProile.scroll}>
       <View style={StyProile.View2}>
         <View style={StyProile.View1}>
-          <View style={StyProile.View3}>
+            <View style={StyProile.View3}>
             <TouchableOpacity onPress={() => {}}>
-                <Text style={StyProile.textTitulo1}>felipeprado03020</Text>
+                <Text style={StyProile.textTitulo1}>{item.nomePerfil}</Text>
             </TouchableOpacity>
           </View>
           <View style={StyProile.viewIcon1}>
@@ -74,12 +106,12 @@ function ProfileScreen({navigation}) {
           </View>
           <View style={StyProile.viewIcon2}>
             <TouchableOpacity onPress={() => {}}>
-                <Octicons name="diff-added" style={StyProile.iconSalv} />
+                <Octicons name="diff-added" style={StyProile.iconSalv1} />
             </TouchableOpacity>
           </View>
           <View style={StyProile.viewIcon3}>
               <TouchableOpacity onPress={() => {}}>
-                  <Ionicons name="menu-outline" style={StyProile.iconSalv1} />
+                  <Ionicons name="menu-outline" style={StyProile.iconSalv2} />
               </TouchableOpacity>
           </View>
         </View>
@@ -92,43 +124,31 @@ function ProfileScreen({navigation}) {
                 <TouchableOpacity onPress={() => {}}>
                   <Image
                     style={StyProile.imagPerf}
-                    source={{uri: listaPerfil.perfil.fotoPerfil}}
+                    source={{uri: item.fotoPerfil}}
                     resizeMode="contain"/>
                 </TouchableOpacity>
                 <View style={StyProile.stilee3}>
-                  <Text style={StyProile.textTitulo2}>{'Felipe Prado'}</Text>
+                  <Text style={StyProile.textTitulo2}>{item.nome}</Text>
                 </View>
               </View>
               <View style={StyProile.stilee3}>
                 <TouchableOpacity onPress={() => {}}>
-                  <Text style={StyProile.textNumer}>
-                    {listaPerfil.perfil.numePubl}
-                  </Text>
-                  <Text style={StyProile.textTitulo}>
-                    {listaPerfil.perfil.tituloPubl}
-                  </Text>
+                  <Text style={StyProile.textNumer}>{item.nPubli}</Text>
+                  <Text style={StyProile.textTitulo}>Publicações</Text>
                 </TouchableOpacity>
               </View>
               <View style={StyProile.stilee3}>
                 <TouchableOpacity onPress={() => {}}>
                   <View>
-                    <Text style={StyProile.textNumer}>
-                      {listaPerfil.perfil.numeguidor}
-                    </Text>
-                    <Text style={StyProile.textTitulo}>
-                      {listaPerfil.perfil.tituloSeg}
-                    </Text>
+                    <Text style={StyProile.textNumer}>{item.nSeguidor}</Text>
+                    <Text style={StyProile.textTitulo}>Seguidores</Text>
                   </View>
                 </TouchableOpacity>
               </View>
               <View style={StyProile.stilee3}>
                 <TouchableOpacity onPress={() => {}}>
-                  <Text style={StyProile.textNumer1}>
-                    {listaPerfil.perfil.nSeguindo}
-                  </Text>
-                  <Text style={StyProile.textTitulo}>
-                    {listaPerfil.perfil.tituloSeguind}
-                  </Text>
+                  <Text style={StyProile.textNumer1}>{item.nSeguindo}</Text>
+                  <Text style={StyProile.textTitulo}>Seguindo</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -137,8 +157,9 @@ function ProfileScreen({navigation}) {
             <View
               style={StyProile.viewTouch1}>
               <TouchableOpacity
-                onPress={() => {}}
+                onPress={edPerfil}
                 style={StyProile.touch1}>
+                  
                   <Text style={StyProile.textTitulo3}>Editar perfil</Text>
               </TouchableOpacity>
               <View style={StyProile.viewTouch2}>
@@ -153,11 +174,11 @@ function ProfileScreen({navigation}) {
               <TouchableOpacity onPress={() => {}}>
                 <Image
                   style={StyProile.imagPerf1}
-                  source={{uri: listaPerfil.perfil.fotoPerfil}}
+                  source={{uri: item.fotoPerfil}}
                   resizeMode="contain"/>
               </TouchableOpacity>
               <View style={StyProile.stilee2}>
-                <Text style={StyProile.textTitulo4}>{'Felipe Prado'}</Text>
+                <Text style={StyProile.textTitulo4}>{item.nome}</Text>
               </View>
             </View>
             <TouchableOpacity onPress={() => {}} style={StyProile.touch2}>
@@ -177,15 +198,19 @@ function ProfileScreen({navigation}) {
                 <Ionicons name="ios-person-circle-outline" style={styles.icon3}/>
                 <View style={styles.viewBarra3}/>
             </TouchableOpacity>
-          </View>
+            </View>
           <View>
             {page === 1 && <PubliFotoScreen />}
             {page === 2 && <PubliVideoScreen />}
             {page === 3 && <PubliPessoaScreen />}
+            
           </View>
         </View>
       </ScrollView>
-    </View>
+     
+    </View> 
+    )}
+      />
   )
 };
 export default ProfileScreen;

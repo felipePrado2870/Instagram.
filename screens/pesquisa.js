@@ -2,45 +2,52 @@ import React, {useState, useEffect} from 'react';
 import { Text,
   TextInput,
   View,
+  Image,
   TouchableOpacity,
+  ActivityIndicator, 
+  FlatList,
 } from 'react-native';
 import StyPesquisa from './styless/styPesquisa';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import firestore from '@react-native-firebase/firestore';
 
 function PesquisaScreen({navigation}) {
-  const [resultado, setResultado] = useState([]);
-  const [pesquisa, setPesquisa] = useState('');
 
-  const listaTeste = [
-    {
-      nome: 'Bruno',
-    },
-    {
-      nome: 'Suellen',
-    },
-    {
-      nome: 'Pedro',
-    },
-  ];
+  const [pesquisa, setPesquisa] = useState('');
+  const [loading, setLoading] = useState(true);
+   const [users, setUsers] = useState([]);
 
   useEffect(() => {}, []);
 
   useEffect(() => {
-    if (pesquisa !== '') {
-      const listaFiltrada = listaTeste.filter(x =>
-        x.nome.toLowerCase().includes(pesquisa.toLowerCase()),
-      );
-      setResultado(listaFiltrada);
-    } else {
-      setResultado([]);
-    }
-  }, [pesquisa]);
+    const subscriber = firestore()
+      .collection('UsuariosPostagens')
+      .onSnapshot(querySnapshot => {
+        const users = [];
+  
+        querySnapshot.forEach(documentSnapshot => {
+          users.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+  
+        setUsers(users);
+        setLoading(false);
+      });
 
-  function buttonPress() {
-    navigation.goBack();
-  }
+    return () => subscriber();
+  }, []);
+
+  if (loading) {
+    return (<View style={StyPesquisa.container1} ><ActivityIndicator /></View>);
+  }  
+  
+
+   
 
   return (
+   
     <View style={StyPesquisa.container}>
       <View
         style={StyPesquisa.view1}>
@@ -55,19 +62,53 @@ function PesquisaScreen({navigation}) {
           <TextInput
             style={StyPesquisa.textInput}
             onChangeText={valor => setPesquisa(valor)}
-            placeholder="Digite algo aqui"
+            placeholder="Pesquisar"
             placeholderTextColor="#666"></TextInput>
         </View>
-      </View>
-      {resultado &&
-        resultado.length > 0 &&
-        resultado.map(item => {
-          return (
-            <View>
-              <Text style={StyPesquisa.text1}>{item.nome}</Text>
-            </View>
-          );
-        })}
+
+      </View> 
+      <FlatList
+      numColumns='2'
+    data={users}
+    renderItem={({ item }) => (
+        <View style={StyPesquisa.stilee2}>
+         {pesquisa === '' &&
+         <FlatList
+         numColumns='2'
+       data={users}
+       renderItem={({ item }) => (
+                  <View style={StyPesquisa.stilee3}>
+                    <TouchableOpacity>
+                    <Image style={StyPesquisa.imagPost1}
+                    source={{ uri: item.fotoPostagem }}
+                    resizeMode="stretch"/>
+                    </TouchableOpacity>
+                  </View>
+                  )}
+                  />
+          }
+          
+      {pesquisa !== '' &&
+              <TouchableOpacity style={StyPesquisa.view2}>
+              <View style={StyPesquisa.view3}>
+                  <Image
+                    style={StyPesquisa.imagPerf}
+                    source={{
+                    uri: item.fotoPerfil,
+                    }}
+                    resizeMode="contain"
+                  />
+              </View>
+              <View style={StyPesquisa.viewText1}>
+                <Text style={StyPesquisa.text1}>{item.nomePerfil}</Text>
+                <Text style={StyPesquisa.text2}>{item.nome}</Text>
+                <Text style={StyPesquisa.text2}>{item.textSeguindo}</Text>
+              </View>
+              </TouchableOpacity>
+              
+         }
+        </View>)}
+              />
     </View>
   );
 }
