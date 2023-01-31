@@ -13,7 +13,7 @@ import StyLogin from './styless/styLogin';
 import AntDesing from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const instaLogoIcon = require('../assets/INV.png');
+const instaLogoIcon = require('../assets/Image-Instagram.png');
 
 function LoginScreen({navigation}) {
   const [email, setEmail] = useState('');

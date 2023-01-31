@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text, Image, StatusBar, View} from 'react-native';
 import StySplash from './styless/stySplash'
-const instaIcon = require('../assets/aviao.png');
-const metaIcon = require('../assets/anonymous.png');
+const instaIcon = require('../assets/Image-Logo.png');
+const metaIcon = require('../assets/Image-Meta.png');
 const login = (false)
 
 function SplashScreen({navigation}) {

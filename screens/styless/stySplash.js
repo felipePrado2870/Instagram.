@@ -13,7 +13,8 @@ const StySplash = StyleSheet.create({
         marginTop: 70, color: '#ffff', fontSize: 17
     },
     image1:{
-        height: 450, marginTop: 200, width: 450
+        height: 200, marginTop: 200, width: 200,
+        marginVertical: 250,
     },
     image2:{
         height: 40, width: 120,

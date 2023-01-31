@@ -72,7 +72,7 @@ const StyHome = StyleSheet.create({
        marginLeft:140,
       },
       image1:{
-        marginLeft: 10, height: 50, width: 220
+        marginLeft: 10, height: 40, width: 100,marginHorizontal: 120
       },
       view3:{
         width: 53,

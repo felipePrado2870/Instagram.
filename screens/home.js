@@ -15,7 +15,7 @@ import Octicons from 'react-native-vector-icons/Octicons'
 import StyHome from './styless/styHome';
 import firestore from '@react-native-firebase/firestore';
 
-const instaLogoIcon = require('../assets/INV.png');
+const instaLogoIcon = require('../assets/Image-Instagram.png');
 
 
 function HomeScreen({navigation}) {
