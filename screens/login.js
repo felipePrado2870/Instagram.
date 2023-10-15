@@ -21,28 +21,28 @@ function LoginScreen({navigation}) {
   const [hidePass, setHidePass] = useState(true);
 
   function executeClick() {
-    navigation.navigate('BottomTab')
+    // navigation.navigate('BottomTab')
 
-  //   if (email === '' || senha === '')
-  //   {Alert.alert('Atenção', 'Email ou  senha sem valor') }
+    if (email === '' || senha === '')
+    {Alert.alert('Atenção', 'Email ou  senha sem valor') }
   
-  //   else {
-  //   auth().signInWithEmailAndPassword(email,senha)
-  //   .then(() =>{
-  //   console.log('usuario Logado!')
-  //   navigation.navigate('BottomTab')
-  //  })
-  //   .catch(error =>{
-  //       if (error.code === 'auth/wrong-password') {
-  //         console.log('Senha incorreta.');
-  //         Alert.alert('Atenção', 'Senha incorreta.')
-  //       }
-  //       if (error.code === 'auth/invalid-email') {
-  //         console.log('email invalido');
-  //         Alert.alert('Atenção', 'Email invalido')
-  //       } 
-  //     })
-  //   }
+    else {
+    auth().signInWithEmailAndPassword(email,senha)
+    .then(() =>{
+    console.log('usuario Logado!')
+    navigation.navigate('BottomTab')
+   })
+    .catch(error =>{
+        if (error.code === 'auth/wrong-password') {
+          console.log('Senha incorreta.');
+          Alert.alert('Atenção', 'Senha incorreta.')
+        }
+        if (error.code === 'auth/invalid-email') {
+          console.log('email invalido');
+          Alert.alert('Atenção', 'Email invalido')
+        } 
+      })
+    }
   }
   
 
